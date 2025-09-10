@@ -46,5 +46,70 @@
     </footer>
 
     <script src="app.js"></script>
+
+    <script>
+      // Sample JavaScript to demonstrate dynamic content loading
+      document.addEventListener('DOMContentLoaded', function () {
+        const activities = [
+          {
+            name: 'Basketball',
+            description: 'Join the basketball team and improve your skills.',
+            schedule: 'Mon, Wed, Fri - 4 PM to 6 PM',
+            max_participants: 15,
+            participants: ['John Doe', 'Jane Smith'],
+          },
+          {
+            name: 'Drama Club',
+            description: 'Explore acting and theater production.',
+            schedule: 'Tue, Thu - 3 PM to 5 PM',
+            max_participants: 10,
+            participants: ['Emily Johnson'],
+          },
+        ];
+
+        const activitiesList = document.getElementById('activities-list');
+        activitiesList.innerHTML = ''; // Clear loading text
+
+        activities.forEach((activity) => {
+          const activityCard = document.createElement('div');
+          activityCard.className = 'activity-card';
+          activityCard.id = `activity-${activity.name}`;
+          activityCard.innerHTML = `
+            <h4>${activity.name}</h4>
+            <p><strong>Description:</strong> ${activity.description}</p>
+            <p><strong>Schedule:</strong> ${activity.schedule}</p>
+            <p><strong>Max Participants:</strong> ${activity.max_participants}</p>
+            <div class="participants-title">Participants:</div>
+            <ul class="participants-list">
+              ${activity.participants.map((p) => `<li>${p}</li>`).join('')}
+            </ul>
+            <button onclick="showSignupForm('${activity.name}')">Sign Up</button>
+          `;
+          activitiesList.appendChild(activityCard);
+        });
+      });
+
+      function showSignupForm(activityName) {
+        const signupForm = document.getElementById('signup-form');
+        const activitySelect = document.getElementById('activity');
+        activitySelect.value = activityName;
+        signupForm.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      document.getElementById('signup-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const activityName = document.getElementById('activity').value;
+        const messageDiv = document.getElementById('message');
+
+        // Simulate a successful signup
+        setTimeout(() => {
+          messageDiv.textContent = `Successfully signed up ${email} for ${activityName}!`;
+          messageDiv.classList.remove('hidden');
+          // Clear the form
+          this.reset();
+        }, 500);
+      });
+    </script>
   </body>
 </html>
